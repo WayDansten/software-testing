@@ -18,7 +18,11 @@ public class Creature {
         this.hostility = hostility;
     }
 
-    public Optional<War> rollInitiative(List<Creature> enemies) {
+    public Optional<War> rollInitiative(List<Creature> enemies) throws InsufficientParticipantsException {
+        if (enemies.isEmpty()) {
+            throw new InsufficientParticipantsException();
+        }
+
         float totalHostility = hostility;
         for (Creature enemy: enemies) {
             totalHostility = totalHostility + enemy.getHostility();
@@ -32,13 +36,8 @@ public class Creature {
                 war.addParticipant(enemy);
             }
 
-            try {
-                war.start();
-                return Optional.of(war);
-            } catch (InsufficientParticipantsException e) {
-                System.out.println(e.getMessage());
-                return Optional.empty();
-            }
+            war.start();
+            return Optional.of(war);
         }
 
         return Optional.empty();

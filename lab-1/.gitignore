@@ -9,3 +9,6 @@ gradlew.bat
 
 # IDE configuration files
 .vscode
+
+# Misc
+*.drawio

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import lab.model.*;
+import lab.model.exception.InsufficientParticipantsException;
 import lab.model.exception.WormholeClosedException;
 
 public class Main {
@@ -28,12 +29,18 @@ public class Main {
         Creature creature2 = new Creature("Insectoid", 3);
         Creature creature3 = new Creature("Machine Mind", 3);
 
-        Optional<War> warOptional = creature1.rollInitiative(List.of(creature2, creature3));
-        if (warOptional.isPresent()) {
-            System.out.println(String.format("Started war between %s, %s and %s",
-                    creature1.getName(),
-                    creature2.getName(),
-                    creature3.getName()));
+        try {
+            Optional<War> warOptional = creature1.rollInitiative(List.of(creature2, creature3));
+            if (warOptional.isPresent()) {
+                System.out.println(String.format("Started war between %s, %s and %s",
+                        creature1.getName(),
+                        creature2.getName(),
+                        creature3.getName()));
+            } else {
+                System.out.println("No war started: conflict resolved peacefully");
+            }
+        } catch (InsufficientParticipantsException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

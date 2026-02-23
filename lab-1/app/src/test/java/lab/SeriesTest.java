@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import lab.series.ArccosSeriesExpander;
+import lab.series.exception.ArgumentException;
 import lab.series.exception.ToleranceException;
 
 class SeriesTest {
@@ -69,5 +70,14 @@ class SeriesTest {
             assertThrows(ToleranceException.class, () -> seriesExpander.expandToSeries(point, n),
                     String.format("Exception not thrown for x = %f", point));
         }));
+    }
+
+    @Test
+    void invalidSeriesLengthTest() {
+        int n = -1;
+        double x = 0;
+
+        ArccosSeriesExpander seriesExpander = new ArccosSeriesExpander();
+        assertThrows(ArgumentException.class, () -> seriesExpander.expandToSeries(x, n));
     }
 }

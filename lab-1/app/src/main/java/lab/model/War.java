@@ -3,7 +3,6 @@ package lab.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import lab.model.exception.InsufficientParticipantsException;
 import lombok.Getter;
 
 @Getter
@@ -24,11 +23,7 @@ public class War {
         participants.remove(creature);
     }
 
-    public void start() throws InsufficientParticipantsException {
-        if (participants.size() < 2) {
-            throw new InsufficientParticipantsException();
-        }
-
+    public void start() {
         isOngoing = true;
     }
 

@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lab.model.exception.WormholeStatusException;
+import lombok.Getter;
 
 public class DimensionalWeave {
     private static DimensionalWeave instance;
+
+    @Getter
     private List<Wormhole> wormholes;
 
     private DimensionalWeave() {
