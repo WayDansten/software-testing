@@ -34,8 +34,6 @@ public class DimensionalWeave {
         try {
             wormhole.close();
             wormholes.remove(wormhole);
-        } catch (WormholeStatusException e) {
-            System.out.println(e.getMessage());
-        }
+        } catch (WormholeStatusException e) {}
     }
 }

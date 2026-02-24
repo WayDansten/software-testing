@@ -38,6 +38,12 @@ class DomainModelTest {
     }
 
     @Test
+    void dimensionalWeaveCreateTest() {
+        DimensionalWeave weave = DimensionalWeave.getInstance();
+        assertNotNull(weave);
+    }
+
+    @Test
     void dimensionalWeaveOpenWormholeTest() {
         DimensionalWeave weave = DimensionalWeave.getInstance();
         Wormhole wormhole = weave.openWormhole();
@@ -62,11 +68,19 @@ class DomainModelTest {
 
         try {
             wormhole.close();
+            assertFalse(wormhole.isOpen());
         } catch (WormholeStatusException e) {
             System.out.println(e.getMessage());
         }
 
         assertThrows(WormholeStatusException.class, wormhole::close);
+        
+        try {
+            wormhole.open();
+            assertTrue(wormhole.isOpen());
+        } catch (WormholeStatusException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Test
@@ -106,6 +120,27 @@ class DomainModelTest {
     }
 
     @Test
+    void warAddParticipantTest() {
+        War war = new War();
+        Creature creature = new Creature("Creature", 0);
+        
+        war.addParticipant(creature);
+        assertEquals(war.getParticipants().get(0), creature);
+    }
+
+    @Test
+    void warRemoveParticipantTest() {
+        War war = new War();
+        Creature creature = new Creature("Creature", 0);
+        
+        war.addParticipant(creature);
+        assertEquals(war.getParticipants().get(0), creature);
+
+        war.removeParticipant(creature);
+        assertTrue(war.getParticipants().isEmpty());
+    }
+
+    @Test
     void creatureWarStartTest() {
         Creature creature1 = new Creature("Creature 1", 5);
         Creature creature2 = new Creature("Creature 2", 10);
@@ -139,5 +174,21 @@ class DomainModelTest {
         Creature creature1 = new Creature("Creature 1", 14);
 
         assertThrows(InsufficientParticipantsException.class, () -> creature1.rollInitiative(List.of()));
+    }
+
+    @Test
+    void warEndTest() {
+        Creature creature1 = new Creature("Creature 1", 5);
+        Creature creature2 = new Creature("Creature 2", 10);
+
+        try {
+            Optional<War> warOptional = creature1.rollInitiative(List.of(creature2));
+            War war = warOptional.get();
+            war.end();
+            assertFalse(war.isOngoing());
+            assertTrue(war.getParticipants().isEmpty());
+        } catch (InsufficientParticipantsException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

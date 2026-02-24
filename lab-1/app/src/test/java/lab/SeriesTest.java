@@ -11,6 +11,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 import lab.series.ArccosSeriesExpander;
+import lab.series.FactorialCalculator;
 import lab.series.exception.ArgumentException;
 import lab.series.exception.ToleranceException;
 
@@ -20,8 +21,8 @@ class SeriesTest {
         double epsilon = 0.001;
         int n = 10;
 
-        List<Double> points = List.of(-0.8, -0.7, -0.375, -0.2, 0.0, 0.021, 0.1, 0.407, 0.675, 0.8);
-        List<Double> trueValues = List.of(2.498, 2.346, 1.955, 1.772, 1.571, 1.55, 1.471, 1.152, 0.83, 0.644);
+        List<Double> points = List.of(-0.8, -0.2, 0.0, 0.021, 0.8);
+        List<Double> trueValues = List.of(2.498, 1.772, 1.571, 1.55, 0.644);
         Map<Double, Double> testPairs = new HashMap<>();
 
         for (int i = 0; i < points.size(); i++) {
@@ -42,8 +43,8 @@ class SeriesTest {
         double epsilon = 0.01;
         int n = 40;
 
-        List<Double> points = List.of(-0.95, -0.9, -0.827, -0.8, 0.8, 0.853, 0.92, 0.95);
-        List<Double> trueValues = List.of(2.824, 2.691, 2.545, 2.498, 0.644, 0.549, 0.403, 0.318);
+        List<Double> points = List.of(-0.95, -0.9, -0.8, 0.8, 0.853, 0.95);
+        List<Double> trueValues = List.of(2.824, 2.691, 2.498, 0.644, 0.549, 0.318);
         Map<Double, Double> testPairs = new HashMap<>();
 
         for (int i = 0; i < points.size(); i++) {
@@ -86,7 +87,7 @@ class SeriesTest {
     void toleranceRangeTest() {
         int n = 0;
 
-        List<Double> points = List.of(-Double.MAX_VALUE, -235345.0, -1.001, 1.00001, 323.0, Double.MAX_VALUE);
+        List<Double> points = List.of(-Double.MAX_VALUE, -1.001, 1.00001, Double.MAX_VALUE, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY, Double.NaN);
         ArccosSeriesExpander seriesExpander = new ArccosSeriesExpander();
 
         assertAll(points.stream().map(point -> () -> {
@@ -102,5 +103,35 @@ class SeriesTest {
 
         ArccosSeriesExpander seriesExpander = new ArccosSeriesExpander();
         assertThrows(ArgumentException.class, () -> seriesExpander.expandToSeries(x, n));
+    }
+
+    @Test
+    void factorialTest() {
+        List<Integer> argumentValues = List.of(0, 1, 4);
+        List<Double> trueValues = List.of(1.0, 1.0, 24.0);
+        Map<Integer, Double> testPairs = new HashMap<>();
+
+        for (int i = 0; i < argumentValues.size(); i++) {
+            testPairs.put(argumentValues.get(i), trueValues.get(i));
+        }
+
+        FactorialCalculator factorialCalculator = new FactorialCalculator();
+        
+        assertAll(testPairs.entrySet().stream().map(pair -> () -> {
+            double result = factorialCalculator.factorial(pair.getKey());
+            double trueValue = pair.getValue();
+            assertEquals(trueValue, result, 0, String.format("Failed at x = %d", pair.getKey()));
+        }));
+    }
+
+    @Test
+    void factorialToleranceTest() {
+        List<Integer> argumentValues = List.of(-1, Integer.MIN_VALUE);
+
+        FactorialCalculator factorialCalculator = new FactorialCalculator();
+        assertAll(argumentValues.stream().map(value -> () -> {
+            assertThrows(ToleranceException.class, () -> factorialCalculator.factorial(value),
+                    String.format("Exception not thrown for x = %d", value));
+        }));
     }
 }

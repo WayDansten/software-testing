@@ -2,8 +2,10 @@ package lab.model;
 
 import lab.model.exception.WormholeClosedException;
 import lab.model.exception.WormholeStatusException;
+import lombok.Getter;
 
 public class Wormhole {
+    @Getter
     private boolean isOpen;
 
     public Wormhole() {
