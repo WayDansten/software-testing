@@ -17,13 +17,12 @@ repositories {
 
 dependencies {
     // Use JUnit Jupiter for testing.
-    testImplementation(libs.junit.jupiter)
-
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     // This dependency is used by the application.
-    implementation(libs.guava)
-    
+    implementation("com.google.guava:guava:33.0.0-jre")
+
 	compileOnly("org.projectlombok:lombok:1.18.42")
 	annotationProcessor("org.projectlombok:lombok:1.18.42")
 	
