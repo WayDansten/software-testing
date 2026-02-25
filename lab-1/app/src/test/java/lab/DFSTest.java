@@ -50,23 +50,23 @@ class DFSTest {
         Node node1 = new Node(1);
         Node node2 = new Node(2);
         Node node3 = new Node(3);
+        Node node4 = new Node(4);
         Node node5 = new Node(5);
-        Node node10 = new Node(10);
 
         node1.addNeighbour(node2);
+        node1.addNeighbour(node4);
         node1.addNeighbour(node5);
-        node1.addNeighbour(node10);
 
         node2.addNeighbour(node1);
         node2.addNeighbour(node3);
 
         node3.addNeighbour(node2);
 
+        node4.addNeighbour(node1);
+
         node5.addNeighbour(node1);
 
-        node10.addNeighbour(node1);
-
-        List<Integer> ids = List.of(1, 2, 3, 5, 10);
+        List<Integer> ids = List.of(1, 2, 3, 4, 5);
         DFSWalker walker = new DFSWalker(ids);
         walker.walk(node1);
 
