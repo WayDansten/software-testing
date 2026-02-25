@@ -1,6 +1,5 @@
 # Gradle files and directories
 .gradle
-gradle
 build
 
 gradle.properties
