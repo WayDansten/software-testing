@@ -13,7 +13,8 @@ public enum FunctionType {
     CSC("csc"),
     LN("ln"),
     LOG("log"),
-    FACTORIAL("factorial");
+    FACTORIAL("factorial"),
+    SYSTEM("function system");
 
     @Getter
     private final String name;

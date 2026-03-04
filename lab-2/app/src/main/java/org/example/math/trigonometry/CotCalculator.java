@@ -21,6 +21,7 @@ public class CotCalculator extends FunctionCalculator {
                 && (Math.abs(sinCalculator.calculate(x)) > FunctionConstants.SINGULARITY_EPSILON);
     }
 
+    @Override
     public double calculate(double x) {
         if (!checkToleranceHit(x)) {
             throw new ToleranceException(String.format(
@@ -31,6 +32,7 @@ public class CotCalculator extends FunctionCalculator {
         return cosCalculator.calculate(x) / sinCalculator.calculate(x);
     }
 
+    @Override
     public double calculate(double x, double epsilon) {
         if (!checkToleranceHit(x)) {
             throw new ToleranceException(String.format(

@@ -21,6 +21,7 @@ public abstract class SeriesExpander extends FunctionCalculator {
 
     protected abstract double calculateNthTerm(double x, int n);
 
+    @Override
     public double calculate(double x) {
         if (!checkToleranceHit(x)) {
             throw new ToleranceException(String.format(
@@ -48,6 +49,7 @@ public abstract class SeriesExpander extends FunctionCalculator {
         return result;
     }
 
+    @Override
     public double calculate(double x, double epsilon) {
         if (!checkToleranceHit(x)) {
             throw new ToleranceException(String.format(

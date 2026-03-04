@@ -19,6 +19,7 @@ public class CscCalculator extends FunctionCalculator {
                 && (Math.abs(sinCalculator.calculate(x)) > FunctionConstants.SINGULARITY_EPSILON);
     }
 
+    @Override
     public double calculate(double x) {
         if (!checkToleranceHit(x)) {
             throw new ToleranceException(String.format(
@@ -29,6 +30,7 @@ public class CscCalculator extends FunctionCalculator {
         return 1 / sinCalculator.calculate(x);
     }
 
+    @Override
     public double calculate(double x, double epsilon) {
         if (!checkToleranceHit(x)) {
             throw new ToleranceException(String.format(

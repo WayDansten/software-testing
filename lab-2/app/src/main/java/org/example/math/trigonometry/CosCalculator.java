@@ -17,6 +17,7 @@ public class CosCalculator extends FunctionCalculator {
         return Double.isFinite(x) && !Double.isNaN(x);
     }
 
+    @Override
     public double calculate(double x) {
         if (!checkToleranceHit(x)) {
             throw new ToleranceException(String.format(
@@ -27,6 +28,7 @@ public class CosCalculator extends FunctionCalculator {
         return Math.sqrt(1 - sinCalculator.calculate(x));
     }
 
+    @Override
     public double calculate(double x, double epsilon) {
         if (!checkToleranceHit(x)) {
             throw new ToleranceException(String.format(

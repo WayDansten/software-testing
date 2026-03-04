@@ -18,6 +18,7 @@ public class SinCalculator extends FunctionCalculator {
         return Double.isFinite(x) && !Double.isNaN(x);
     }
 
+    @Override
     public double calculate(double x) {
         if (!checkToleranceHit(x)) {
             throw new ToleranceException(String.format(
@@ -28,6 +29,7 @@ public class SinCalculator extends FunctionCalculator {
         return seriesExpander.calculate(x, 0.001);
     }
 
+    @Override
     public double calculate(double x, double epsilon) {
         if (!checkToleranceHit(x)) {
             throw new ToleranceException(String.format(

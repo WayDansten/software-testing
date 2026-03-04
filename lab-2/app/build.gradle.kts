@@ -18,6 +18,8 @@ repositories {
 dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation(libs.junit.jupiter)
+    
+    testImplementation("org.mockito:mockito-core:5.22.0")
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
@@ -30,8 +32,8 @@ dependencies {
 	testCompileOnly("org.projectlombok:lombok:1.18.42")
 	testAnnotationProcessor("org.projectlombok:lombok:1.18.42")
 
-    compileOnly("org.slf4j:slf4j-api:2.0.17")
-	testCompileOnly("org.slf4j:slf4j-api:2.0.17")
+    implementation("org.slf4j:slf4j-api:2.0.17")
+    implementation("org.slf4j:slf4j-simple:2.0.17")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
