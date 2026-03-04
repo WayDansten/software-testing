@@ -1,6 +1,7 @@
 # Gradle files and directories
 .gradle
 build
+bin
 
 gradle.properties
 gradlew
