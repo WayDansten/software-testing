@@ -12,10 +12,12 @@ public class FactorialCalculator extends FunctionCalculator {
         return Double.isFinite(x) && !Double.isNaN(x) && (x >= 0);
     }
     
-    public double factorial(int x) {
+    @Override
+    public double calculate(double x) {
         if (!checkToleranceHit(x)) {
-            throw new ToleranceException(String.format("Cannot take factorial of a negative integer: %d", x));
+            throw new ToleranceException(String
+                    .format("Argument x = %f is out of tolerance range for the '%s' function.", x, getFunction().getName()));
         }
-        return x == 0 ? 1.0 : x * factorial(x - 1);
+        return x == 0 ? 1.0 : x * calculate(x - 1);
     }
 }

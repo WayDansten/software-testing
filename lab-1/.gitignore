@@ -3,10 +3,6 @@
 build
 bin
 
-gradle.properties
-gradlew
-gradlew.bat
-
 # IDE configuration files
 .vscode
 

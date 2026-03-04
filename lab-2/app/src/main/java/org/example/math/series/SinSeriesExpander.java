@@ -14,6 +14,6 @@ public class SinSeriesExpander extends SeriesExpander {
 
     @Override
     protected double calculateNthTerm(double x, int n) {
-        return (Math.pow(-1, n) * Math.pow (x, 2 * n + 1.0)) / calculator.factorial(2 * n + 1);
+        return (Math.pow(-1, n) * Math.pow (x, 2 * n + 1.0)) / factorialCalculator.calculate(2 * n + 1);
     }
 }
