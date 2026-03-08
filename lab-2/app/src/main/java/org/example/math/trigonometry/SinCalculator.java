@@ -1,6 +1,7 @@
 package org.example.math.trigonometry;
 
 import org.example.math.common.FunctionCalculator;
+import org.example.math.common.FunctionConstants;
 import org.example.math.common.FunctionType;
 import org.example.math.exception.ToleranceException;
 import org.example.math.series.SinSeriesExpander;
@@ -11,6 +12,11 @@ public class SinCalculator extends FunctionCalculator {
     public SinCalculator() {
         super(FunctionType.SIN);
         this.seriesExpander = new SinSeriesExpander();
+    }
+
+    public SinCalculator(SinSeriesExpander seriesExpander) {
+        super(FunctionType.SIN);
+        this.seriesExpander = seriesExpander;
     }
 
     @Override
@@ -26,7 +32,7 @@ public class SinCalculator extends FunctionCalculator {
                     x, getFunction().getName()));
         }
 
-        return seriesExpander.calculate(x, 0.001);
+        return seriesExpander.calculate(x, FunctionConstants.CONVERGENCE_EPSILON);
     }
 
     @Override

@@ -12,6 +12,11 @@ public class LogCalculator extends FunctionCalculator {
         this.lnCalculator = new LnCalculator();
     }
 
+    public LogCalculator(LnCalculator lnCalculator) {
+        super(FunctionType.LOG);
+        this.lnCalculator = lnCalculator;
+    }
+
     @Override
     protected boolean checkToleranceHit(double x) {
         return Double.isFinite(x) && !Double.isNaN(x) && (x > 0);
@@ -27,14 +32,15 @@ public class LogCalculator extends FunctionCalculator {
         return lnCalculator.calculate(x);
     }
 
-    public double calculate(double x, int base) {
+    @Override
+    public double calculate(double x, double base) {
         if (!checkToleranceHit(x)) {
             throw new ToleranceException(String.format(
                     "Argument x = %f is out of tolerance range for the '%s' function.",
                     x, getFunction().getName()));
         }
 
-        if ((base == 1) || base <= 0) {
+        if ((base == 1) || base <= 0 || !Double.isFinite(base) || Double.isNaN(base)) {
             throw new IllegalArgumentException(
                     String.format("Invalid base for logarithm: base = %d, should be > 0 and != 1.", base));
         }
@@ -42,14 +48,14 @@ public class LogCalculator extends FunctionCalculator {
         return lnCalculator.calculate(x) / lnCalculator.calculate(base);
     }
 
-    public double calculate(double x, int base, double epsilon) {
+    public double calculate(double x, double base, double epsilon) {
         if (!checkToleranceHit(x)) {
             throw new ToleranceException(String.format(
                     "Argument x = %f is out of tolerance range for the '%s' function.",
                     x, getFunction().getName()));
         }
 
-        if ((base == 1) || base <= 0) {
+        if ((base == 1) || base <= 0 || !Double.isFinite(base) || Double.isNaN(base)) {
             throw new IllegalArgumentException(
                     String.format("Invalid base for logarithm: base = %d, should be > 0 and != 1.", base));
         }

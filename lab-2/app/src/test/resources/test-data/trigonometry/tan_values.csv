@@ -1,0 +1,6 @@
+x,expected,result_epsilon,convergence_epsilon
+0.0,0.0,1e-3,1e-3
+6.2831,0.0,1e-3,1e-3
+3.1416,0.0,1e-3,1e-3
+0.7854,1.0,1e-3,1e-3
+0.5236,0.5774,1e-3,1e-3

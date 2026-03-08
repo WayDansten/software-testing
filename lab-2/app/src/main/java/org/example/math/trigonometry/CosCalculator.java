@@ -1,5 +1,7 @@
 package org.example.math.trigonometry;
 
+import java.math.BigDecimal;
+
 import org.example.math.common.FunctionCalculator;
 import org.example.math.common.FunctionType;
 import org.example.math.exception.ToleranceException;
@@ -10,6 +12,11 @@ public class CosCalculator extends FunctionCalculator {
     public CosCalculator() {
         super(FunctionType.COS);
         this.sinCalculator = new SinCalculator();
+    }
+
+    public CosCalculator(SinCalculator sinCalculator) {
+        super(FunctionType.COS);
+        this.sinCalculator = sinCalculator;
     }
 
     @Override
@@ -25,7 +32,15 @@ public class CosCalculator extends FunctionCalculator {
                     x, getFunction().getName()));
         }
 
-        return Math.sqrt(1 - sinCalculator.calculate(x));
+        BigDecimal preciseX = BigDecimal.valueOf(x);
+        double remainder = preciseX.remainder(BigDecimal.valueOf(Math.PI * 2)).doubleValue();
+        double radical = Math.max(1 - Math.pow(sinCalculator.calculate(x), 2), 0);
+        if (remainder >= -Math.PI / 2 && remainder <= Math.PI / 2
+            || remainder >= Math.PI * 1.5 && remainder <= Math.PI * 2
+            || remainder >= -Math.PI * 2 && remainder <= -Math.PI * 1.5) {
+            return Math.sqrt(radical);
+        }
+        return -Math.sqrt(radical);
     }
 
     @Override
@@ -41,6 +56,14 @@ public class CosCalculator extends FunctionCalculator {
                     String.format("Cannot calculate a function with negative accuracy: epsilon = %f", epsilon));
         }
 
-        return Math.sqrt(1 - sinCalculator.calculate(x, epsilon));
+        BigDecimal preciseX = BigDecimal.valueOf(x);
+        double remainder = preciseX.remainder(BigDecimal.valueOf(Math.PI * 2)).doubleValue();
+        double radical = Math.max(1 - Math.pow(sinCalculator.calculate(x, epsilon), 2), 0);
+        if (remainder >= -Math.PI / 2 && remainder <= Math.PI / 2
+            || remainder >= Math.PI * 1.5 && remainder <= Math.PI * 2
+            || remainder >= -Math.PI * 2 && remainder <= -Math.PI * 1.5) {
+            return Math.sqrt(radical);
+        }
+        return -Math.sqrt(radical);
     }
 }

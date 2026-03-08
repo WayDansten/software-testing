@@ -9,82 +9,94 @@ import org.example.math.trigonometry.SecCalculator;
 import org.example.math.trigonometry.SinCalculator;
 import org.example.math.trigonometry.TanCalculator;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class MyMath {
-    private static final SinCalculator sinCalculator = new SinCalculator();
-    private static final CosCalculator cosCalculator = new CosCalculator();
+    private final SinCalculator sinCalculator;
+    private final CosCalculator cosCalculator;
 
-    private static final TanCalculator tanCalculator = new TanCalculator();
-    private static final CotCalculator cotCalculator = new CotCalculator();
+    private final TanCalculator tanCalculator;
+    private final CotCalculator cotCalculator;
 
-    private static final SecCalculator secCalculator = new SecCalculator();
-    private static final CscCalculator cscCalculator = new CscCalculator();
+    private final SecCalculator secCalculator;
+    private final CscCalculator cscCalculator;
 
-    private static final LnCalculator lnCalculator = new LnCalculator();
-    private static final LogCalculator logCalculator = new LogCalculator();
+    private final LnCalculator lnCalculator;
+    private final LogCalculator logCalculator;
 
-    private MyMath() {}
+    public MyMath() {
+        this.sinCalculator = new SinCalculator();
+        this.cosCalculator = new CosCalculator();
+        this.tanCalculator = new TanCalculator();
+        this.cotCalculator = new CotCalculator();
+        this.secCalculator = new SecCalculator();
+        this.cscCalculator = new CscCalculator();
+        this.lnCalculator = new LnCalculator();
+        this.logCalculator = new LogCalculator();
+    }
 
-    public static double sin(double x) {
+    public double sin(double x) {
         return sinCalculator.calculate(x);
     }
 
-    public static double sin(double x, double epsilon) {
+    public double sin(double x, double epsilon) {
         return sinCalculator.calculate(x, epsilon);
     }
 
-    public static double cos(double x) {
+    public double cos(double x) {
         return cosCalculator.calculate(x);
     }
 
-    public static double cos(double x, double epsilon) {
+    public double cos(double x, double epsilon) {
         return cosCalculator.calculate(x, epsilon);
     }
 
-    public static double tan(double x) {
+    public double tan(double x) {
         return tanCalculator.calculate(x);
     }
 
-    public static double tan(double x, double epsilon) {
+    public double tan(double x, double epsilon) {
         return tanCalculator.calculate(x, epsilon);
     }
 
-    public static double cot(double x) {
+    public double cot(double x) {
         return cotCalculator.calculate(x);
     }
 
-    public static double cot(double x, double epsilon) {
+    public double cot(double x, double epsilon) {
         return cotCalculator.calculate(x, epsilon);
     }
 
-    public static double sec(double x) {
+    public double sec(double x) {
         return secCalculator.calculate(x);
     }
 
-    public static double sec(double x, double epsilon) {
+    public double sec(double x, double epsilon) {
         return secCalculator.calculate(x, epsilon);
     }
 
-    public static double csc(double x) {
+    public double csc(double x) {
         return cscCalculator.calculate(x);
     }
 
-    public static double csc(double x, double epsilon) {
+    public double csc(double x, double epsilon) {
         return cscCalculator.calculate(x, epsilon);
     }
 
-    public static double ln(double x) {
+    public double ln(double x) {
         return lnCalculator.calculate(x);
     }
 
-    public static double ln(double x, double epsilon) {
+    public double ln(double x, double epsilon) {
         return lnCalculator.calculate(x, epsilon);
     }
 
-    public static double log(double x, int base) {
+    public double log(double x, int base) {
         return logCalculator.calculate(x, base);
     }
 
-    public static double log(double x, int base, double epsilon) {
+    public double log(double x, int base, double epsilon) {
         return logCalculator.calculate(x, base, epsilon);
     }
 }

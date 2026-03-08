@@ -13,6 +13,11 @@ public class SecCalculator extends FunctionCalculator {
         this.cosCalculator = new CosCalculator();
     }
 
+    public SecCalculator(CosCalculator cosCalculator) {
+        super(FunctionType.SEC);
+        this.cosCalculator = cosCalculator;
+    }
+
     @Override
     protected boolean checkToleranceHit(double x) {
         return Double.isFinite(x) && !Double.isNaN(x)

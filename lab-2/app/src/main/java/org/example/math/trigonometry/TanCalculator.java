@@ -15,6 +15,12 @@ public class TanCalculator extends FunctionCalculator {
         this.cosCalculator = new CosCalculator();
     }
 
+    public TanCalculator(SinCalculator sinCalculator, CosCalculator cosCalculator) {
+        super(FunctionType.TAN);
+        this.sinCalculator = sinCalculator;
+        this.cosCalculator = cosCalculator;
+    }
+
     @Override
     protected boolean checkToleranceHit(double x) {
         return Double.isFinite(x) && !Double.isNaN(x)

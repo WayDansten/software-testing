@@ -13,11 +13,17 @@ public class LnCalculator extends FunctionCalculator {
         this.seriesExpander = new LnSeriesExpander();
     }
 
+    public LnCalculator(LnSeriesExpander seriesExpander) {
+        super(FunctionType.LN);
+        this.seriesExpander = seriesExpander;
+    }
+
     @Override
     protected boolean checkToleranceHit(double x) {
         return Double.isFinite(x) && !Double.isNaN(x) && (x > 0);
     }
 
+    @Override
     public double calculate(double x) {
         if (!checkToleranceHit(x)) {
             throw new ToleranceException(String.format(
@@ -28,6 +34,7 @@ public class LnCalculator extends FunctionCalculator {
         return seriesExpander.calculate(x, 0.001);
     }
 
+    @Override
     public double calculate(double x, double epsilon) {
         if (!checkToleranceHit(x)) {
             throw new ToleranceException(String.format(

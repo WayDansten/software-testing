@@ -13,6 +13,11 @@ public class CscCalculator extends FunctionCalculator {
         this.sinCalculator = new SinCalculator();
     }
 
+    public CscCalculator(SinCalculator sinCalculator) {
+        super(FunctionType.CSC);
+        this.sinCalculator = sinCalculator;
+    }
+
     @Override
     protected boolean checkToleranceHit(double x) {
         return Double.isFinite(x) && !Double.isNaN(x)

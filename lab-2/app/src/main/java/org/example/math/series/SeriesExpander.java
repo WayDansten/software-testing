@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public abstract class SeriesExpander extends FunctionCalculator {
-    private static final int MAX_TERMS = 100;
+    private static final int MAX_TERMS = 1000;
 
     protected final FactorialCalculator factorialCalculator;
 
@@ -59,16 +59,15 @@ public abstract class SeriesExpander extends FunctionCalculator {
 
         double result = 0;
         double delta = 0;
-        double previousTerm = 0;
-        double nextTerm = 0;
+        double previousResult = 0;
         for (int i = 0; i <= MAX_TERMS; i++) {
-            nextTerm = calculateNthTerm(x, i);
+            double nextTerm = calculateNthTerm(x, i);
             result = result + nextTerm;
-            delta = Math.abs(nextTerm - previousTerm);
+            delta = Math.abs(result - previousResult);
             if (delta <= epsilon) {
                 return result;
             }
-            previousTerm = nextTerm;
+            previousResult = result;
         }
 
         log.warn(String.format(

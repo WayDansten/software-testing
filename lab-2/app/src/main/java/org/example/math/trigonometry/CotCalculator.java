@@ -15,6 +15,12 @@ public class CotCalculator extends FunctionCalculator {
         this.cosCalculator = new CosCalculator();
     }
 
+    public CotCalculator(SinCalculator sinCalculator, CosCalculator cosCalculator) {
+        super(FunctionType.COT);
+        this.sinCalculator = sinCalculator;
+        this.cosCalculator = cosCalculator;
+    }
+
     @Override
     protected boolean checkToleranceHit(double x) {
         return Double.isFinite(x) && !Double.isNaN(x)
