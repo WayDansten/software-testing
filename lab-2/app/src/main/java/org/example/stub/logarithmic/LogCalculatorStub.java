@@ -99,6 +99,8 @@ public class LogCalculatorStub extends LogCalculator {
             throw new IllegalArgumentException();
         }
 
-        return answers.get(x).get(base);
+        double result = answers.get(x).get(base);
+        writeCalculationResult(x, result);
+        return result;
     }
 }

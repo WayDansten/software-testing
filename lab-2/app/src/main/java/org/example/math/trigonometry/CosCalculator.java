@@ -35,12 +35,16 @@ public class CosCalculator extends FunctionCalculator {
         BigDecimal preciseX = BigDecimal.valueOf(x);
         double remainder = preciseX.remainder(BigDecimal.valueOf(Math.PI * 2)).doubleValue();
         double radical = Math.max(1 - Math.pow(sinCalculator.calculate(x), 2), 0);
+        double result;
         if (remainder >= -Math.PI / 2 && remainder <= Math.PI / 2
             || remainder >= Math.PI * 1.5 && remainder <= Math.PI * 2
             || remainder >= -Math.PI * 2 && remainder <= -Math.PI * 1.5) {
-            return Math.sqrt(radical);
+            result = Math.sqrt(radical);
+        } else {
+            result = -Math.sqrt(radical);
         }
-        return -Math.sqrt(radical);
+        writeCalculationResult(x, result);
+        return result;
     }
 
     @Override
@@ -59,11 +63,15 @@ public class CosCalculator extends FunctionCalculator {
         BigDecimal preciseX = BigDecimal.valueOf(x);
         double remainder = preciseX.remainder(BigDecimal.valueOf(Math.PI * 2)).doubleValue();
         double radical = Math.max(1 - Math.pow(sinCalculator.calculate(x, epsilon), 2), 0);
+        double result;
         if (remainder >= -Math.PI / 2 && remainder <= Math.PI / 2
             || remainder >= Math.PI * 1.5 && remainder <= Math.PI * 2
             || remainder >= -Math.PI * 2 && remainder <= -Math.PI * 1.5) {
-            return Math.sqrt(radical);
+            result = Math.sqrt(radical);
+        } else {
+            result = -Math.sqrt(radical);
         }
-        return -Math.sqrt(radical);
+        writeCalculationResult(x, result);
+        return result;
     }
 }

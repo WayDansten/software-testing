@@ -34,6 +34,8 @@ dependencies {
 
     implementation("org.slf4j:slf4j-api:2.0.17")
     implementation("org.slf4j:slf4j-simple:2.0.17")
+
+    implementation("com.opencsv:opencsv:5.12.0")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

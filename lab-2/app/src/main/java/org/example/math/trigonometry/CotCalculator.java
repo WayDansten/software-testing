@@ -35,7 +35,9 @@ public class CotCalculator extends FunctionCalculator {
                     x, getFunction().getName()));
         }
 
-        return cosCalculator.calculate(x) / sinCalculator.calculate(x);
+        double result = cosCalculator.calculate(x) / sinCalculator.calculate(x);
+        writeCalculationResult(x, result);
+        return result;
     }
 
     @Override
@@ -51,6 +53,8 @@ public class CotCalculator extends FunctionCalculator {
                     String.format("Cannot calculate a function with negative accuracy: epsilon = %f", epsilon));
         }
 
-        return cosCalculator.calculate(x) / sinCalculator.calculate(x);
+        double result = cosCalculator.calculate(x, epsilon) / sinCalculator.calculate(x, epsilon);
+        writeCalculationResult(x, result);
+        return result;
     }
 }

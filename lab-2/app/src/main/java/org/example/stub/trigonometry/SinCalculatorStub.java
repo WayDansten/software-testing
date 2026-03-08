@@ -49,6 +49,8 @@ public class SinCalculatorStub extends SinCalculator {
             throw new ToleranceException("");
         }
 
-        return answers.get(x);
+        double result = answers.get(x);
+        writeCalculationResult(x, result);
+        return result;
     }
 }

@@ -38,6 +38,7 @@ public abstract class SeriesExpander extends FunctionCalculator {
             result = result + nextTerm;
             delta = Math.abs(nextTerm - previousTerm);
             if (delta <= FunctionConstants.CONVERGENCE_EPSILON) {
+                writeCalculationResult(x, result);
                 return result;
             }
             previousTerm = nextTerm;
@@ -46,6 +47,7 @@ public abstract class SeriesExpander extends FunctionCalculator {
         log.warn(String.format(
                 "Could not calculate function '%s' for x = %f with accuracy epsilon = %f. Reached accuracy of delta = %f",
                 getFunction().getName(), x, FunctionConstants.CONVERGENCE_EPSILON, delta));
+        writeCalculationResult(x, result);
         return result;
     }
 
@@ -65,6 +67,7 @@ public abstract class SeriesExpander extends FunctionCalculator {
             result = result + nextTerm;
             delta = Math.abs(result - previousResult);
             if (delta <= epsilon) {
+                writeCalculationResult(x, result);
                 return result;
             }
             previousResult = result;
@@ -73,6 +76,7 @@ public abstract class SeriesExpander extends FunctionCalculator {
         log.warn(String.format(
                 "Could not calculate function '%s' for x = %f with accuracy epsilon = %f. Reached accuracy of delta = %f",
                 getFunction().getName(), x, epsilon, delta));
+        writeCalculationResult(x, result);
         return result;
     }
 }

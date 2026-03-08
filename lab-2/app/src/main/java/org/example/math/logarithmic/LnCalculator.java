@@ -31,7 +31,9 @@ public class LnCalculator extends FunctionCalculator {
                     x, getFunction().getName()));
         }
 
-        return seriesExpander.calculate(x, 0.001);
+        double result = seriesExpander.calculate(x, 0.001);
+        writeCalculationResult(x, result);
+        return result;
     }
 
     @Override
@@ -47,6 +49,8 @@ public class LnCalculator extends FunctionCalculator {
                     String.format("Cannot calculate a function with negative accuracy: epsilon = %f", epsilon));
         }
 
-        return seriesExpander.calculate(x, epsilon);
+        double result = seriesExpander.calculate(x, epsilon);
+        writeCalculationResult(x, result);
+        return result;
     }
 }

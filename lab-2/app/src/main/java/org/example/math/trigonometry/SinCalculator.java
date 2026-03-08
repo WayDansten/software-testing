@@ -32,7 +32,9 @@ public class SinCalculator extends FunctionCalculator {
                     x, getFunction().getName()));
         }
 
-        return seriesExpander.calculate(x, FunctionConstants.CONVERGENCE_EPSILON);
+        double result = seriesExpander.calculate(x, FunctionConstants.CONVERGENCE_EPSILON);
+        writeCalculationResult(x, result);
+        return result;
     }
 
     @Override
@@ -48,6 +50,8 @@ public class SinCalculator extends FunctionCalculator {
                     String.format("Cannot calculate a function with negative accuracy: epsilon = %f", epsilon));
         }
 
-        return seriesExpander.calculate(x, epsilon);
+        double result = seriesExpander.calculate(x, epsilon);
+        writeCalculationResult(x, result);
+        return result;
     }
 }

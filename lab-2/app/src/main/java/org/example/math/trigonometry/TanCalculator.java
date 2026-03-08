@@ -35,7 +35,9 @@ public class TanCalculator extends FunctionCalculator {
                     x, getFunction().getName()));
         }
 
-        return sinCalculator.calculate(x) / cosCalculator.calculate(x);
+        double result = sinCalculator.calculate(x) / cosCalculator.calculate(x);
+        writeCalculationResult(x, result);
+        return result;
     }
 
     @Override
@@ -51,6 +53,8 @@ public class TanCalculator extends FunctionCalculator {
                     String.format("Cannot calculate a function with negative accuracy: epsilon = %f", epsilon));
         }
 
-        return sinCalculator.calculate(x) / cosCalculator.calculate(x);
+        double result = sinCalculator.calculate(x, epsilon) / cosCalculator.calculate(x, epsilon);
+        writeCalculationResult(x, result);
+        return result;
     }
 }

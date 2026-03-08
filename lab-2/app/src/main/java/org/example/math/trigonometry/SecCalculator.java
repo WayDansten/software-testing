@@ -32,7 +32,9 @@ public class SecCalculator extends FunctionCalculator {
                     x, getFunction().getName()));
         }
 
-        return 1 / cosCalculator.calculate(x);
+        double result = 1 / cosCalculator.calculate(x);
+        writeCalculationResult(x, result);
+        return result;
     }
 
     @Override
@@ -48,6 +50,8 @@ public class SecCalculator extends FunctionCalculator {
                     String.format("Cannot calculate a function with negative accuracy: epsilon = %f", epsilon));
         }
 
-        return 1 / cosCalculator.calculate(x, epsilon);
+        double result = 1 / cosCalculator.calculate(x, epsilon);
+        writeCalculationResult(x, result);
+        return result;
     }
 }

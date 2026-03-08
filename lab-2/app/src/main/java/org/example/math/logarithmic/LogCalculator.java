@@ -29,7 +29,9 @@ public class LogCalculator extends FunctionCalculator {
                     x, getFunction().getName()));
         }
 
-        return lnCalculator.calculate(x);
+        double result = lnCalculator.calculate(x);
+        writeCalculationResult(x, result);
+        return result;
     }
 
     @Override
@@ -45,7 +47,9 @@ public class LogCalculator extends FunctionCalculator {
                     String.format("Invalid base for logarithm: base = %d, should be > 0 and != 1.", base));
         }
 
-        return lnCalculator.calculate(x) / lnCalculator.calculate(base);
+        double result = lnCalculator.calculate(x) / lnCalculator.calculate(base);
+        writeCalculationResult(x, result);
+        return result;
     }
 
     public double calculate(double x, double base, double epsilon) {
@@ -60,6 +64,8 @@ public class LogCalculator extends FunctionCalculator {
                     String.format("Invalid base for logarithm: base = %d, should be > 0 and != 1.", base));
         }
 
-        return lnCalculator.calculate(x, epsilon) / lnCalculator.calculate(base, epsilon);
+        double result = lnCalculator.calculate(x, epsilon) / lnCalculator.calculate(base, epsilon);
+        writeCalculationResult(x, result);
+        return result;
     }
 }

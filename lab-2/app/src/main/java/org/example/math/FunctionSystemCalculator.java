@@ -35,16 +35,20 @@ public class FunctionSystemCalculator extends FunctionCalculator {
         }
 
         if (x > 0) {
-            return (((((math.log(x, 10) + math.log(x, 2)) + math.log(x, 3))
+            double result = (((((math.log(x, 10) + math.log(x, 2)) + math.log(x, 3))
             - ((math.log(x, 5) + math.log(x, 10)) / (math.log(x, 10) + math.log(x, 2))))
             - (((math.log(x, 2) / math.log(x, 5)) / math.log(x, 5)) + math.ln(x)))
             + math.ln(x));
+            writeCalculationResult(x, result);
+            return result;
         }
 
-        return ((Math.pow(Math.pow(Math.pow((((((((math.cos(x) / math.csc(x)) / math.csc(x)) / (math.cot(x) / math.cot(x)))
+        double result = ((Math.pow(Math.pow(Math.pow((((((((math.cos(x) / math.csc(x)) / math.csc(x)) / (math.cot(x) / math.cot(x)))
         + ((math.sec(x) - math.csc(x)) * math.cos(x)))
         + math.cos(x)) / (math.tan(x) / math.cos(x))) * math.sec(x)), 2), 3), 2))
         + (((math.sin(x) * Math.pow(math.csc(x), 2)) * math.cot(x)) + math.cot(x)));
+        writeCalculationResult(x, result);
+        return result;
     }
 
     @Override
@@ -56,15 +60,19 @@ public class FunctionSystemCalculator extends FunctionCalculator {
         }
 
         if (x > 0) {
-            return (((((math.log(x, 10, epsilon) + math.log(x, 2, epsilon)) + math.log(x, 3, epsilon))
+            double result = (((((math.log(x, 10, epsilon) + math.log(x, 2, epsilon)) + math.log(x, 3, epsilon))
             - ((math.log(x, 5, epsilon) + math.log(x, 10, epsilon)) / (math.log(x, 10, epsilon) + math.log(x, 2, epsilon))))
             - (((math.log(x, 2, epsilon) / math.log(x, 5, epsilon)) / math.log(x, 5, epsilon)) + math.ln(x, epsilon)))
             + math.ln(x, epsilon));
+            writeCalculationResult(x, result);
+            return result;
         }
 
-        return ((Math.pow(Math.pow(Math.pow((((((((math.cos(x, epsilon) / math.csc(x, epsilon)) / math.csc(x, epsilon)) / (math.cot(x, epsilon) / math.cot(x, epsilon)))
+        double result = ((Math.pow(Math.pow(Math.pow((((((((math.cos(x, epsilon) / math.csc(x, epsilon)) / math.csc(x, epsilon)) / (math.cot(x, epsilon) / math.cot(x, epsilon)))
         + ((math.sec(x, epsilon) - math.csc(x, epsilon)) * math.cos(x, epsilon)))
         + math.cos(x, epsilon)) / (math.tan(x, epsilon) / math.cos(x, epsilon))) * math.sec(x, epsilon)), 2), 3), 2))
         + (((math.sin(x, epsilon) * Math.pow(math.csc(x, epsilon), 2)) * math.cot(x, epsilon)) + math.cot(x, epsilon)));
+        writeCalculationResult(x, result);
+        return result;
     }
 }
