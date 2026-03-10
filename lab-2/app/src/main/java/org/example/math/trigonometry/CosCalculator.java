@@ -34,7 +34,7 @@ public class CosCalculator extends FunctionCalculator {
 
         BigDecimal preciseX = BigDecimal.valueOf(x);
         double remainder = preciseX.remainder(BigDecimal.valueOf(Math.PI * 2)).doubleValue();
-        double radical = Math.max(1 - Math.pow(sinCalculator.calculate(x), 2), 0);
+        double radical = 1 - Math.pow(sinCalculator.calculate(x), 2);
         double result;
         if (remainder >= -Math.PI / 2 && remainder <= Math.PI / 2
             || remainder >= Math.PI * 1.5 && remainder <= Math.PI * 2

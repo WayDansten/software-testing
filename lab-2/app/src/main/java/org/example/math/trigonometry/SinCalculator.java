@@ -33,6 +33,8 @@ public class SinCalculator extends FunctionCalculator {
         }
 
         double result = seriesExpander.calculate(x, FunctionConstants.CONVERGENCE_EPSILON);
+        result = result > 1.0 ? 1.0 : result;
+        result = result < -1.0 ? -1.0 : result;
         writeCalculationResult(x, result);
         return result;
     }
@@ -51,6 +53,8 @@ public class SinCalculator extends FunctionCalculator {
         }
 
         double result = seriesExpander.calculate(x, epsilon);
+        result = result > 1.0 ? 1.0 : result;
+        result = result < -1.0 ? -1.0 : result;
         writeCalculationResult(x, result);
         return result;
     }
