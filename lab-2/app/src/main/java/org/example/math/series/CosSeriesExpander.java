@@ -2,9 +2,9 @@ package org.example.math.series;
 
 import org.example.math.common.FunctionType;
 
-public class SinSeriesExpander extends SeriesExpander {
-    public SinSeriesExpander() {
-        super(FunctionType.SIN);
+public class CosSeriesExpander extends SeriesExpander {
+    public CosSeriesExpander() {
+        super(FunctionType.COS);
     }
 
     @Override
@@ -14,6 +14,6 @@ public class SinSeriesExpander extends SeriesExpander {
 
     @Override
     protected double calculateNthTerm(double x, int n) {
-        return (Math.pow(-1, n) * Math.pow(x, 2 * n + 1.0)) / factorialCalculator.calculate(2 * n + 1.0);
+        return (Math.pow(-1, n) * Math.pow(x, 2.0 * n)) / factorialCalculator.calculate(2.0 * n);
     }
 }

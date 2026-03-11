@@ -5,16 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.example.math.exception.ToleranceException;
 import org.example.math.series.LnSeriesExpander;
-import org.example.math.series.SinSeriesExpander;
+import org.example.math.series.CosSeriesExpander;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class SeriesTest {
     @ParameterizedTest
-    @CsvFileSource(resources = "/test-data/trigonometry/sin_values.csv", numLinesToSkip = 1)
-    void sinSeriesTest(double x, double expected, double resultEpsilon, double convergenceEpsilon) {
-        SinSeriesExpander expander = new SinSeriesExpander();
+    @CsvFileSource(resources = "/test-data/trigonometry/cos_values.csv", numLinesToSkip = 1)
+    void cosSeriesTest(double x, double expected, double resultEpsilon, double convergenceEpsilon) {
+        CosSeriesExpander expander = new CosSeriesExpander();
         double actual = expander.calculate(x, convergenceEpsilon);
         
         assertEquals(expected, actual, resultEpsilon);
@@ -26,8 +26,8 @@ class SeriesTest {
         "Infinity",
         "-Infinity"
     })
-    void sinSeriesToleranceTest(double x) {
-        SinSeriesExpander expander = new SinSeriesExpander();
+    void cosSeriesToleranceTest(double x) {
+        CosSeriesExpander expander = new CosSeriesExpander();
         assertThrows(ToleranceException.class, () -> expander.calculate(x));
     }
 

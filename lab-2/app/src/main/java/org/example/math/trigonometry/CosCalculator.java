@@ -1,22 +1,21 @@
 package org.example.math.trigonometry;
 
-import java.math.BigDecimal;
-
 import org.example.math.common.FunctionCalculator;
 import org.example.math.common.FunctionType;
 import org.example.math.exception.ToleranceException;
+import org.example.math.series.CosSeriesExpander;
 
 public class CosCalculator extends FunctionCalculator {
-    private final SinCalculator sinCalculator;
+    private final CosSeriesExpander seriesExpander;
 
     public CosCalculator() {
         super(FunctionType.COS);
-        this.sinCalculator = new SinCalculator();
+        this.seriesExpander = new CosSeriesExpander();
     }
 
-    public CosCalculator(SinCalculator sinCalculator) {
+    public CosCalculator(CosSeriesExpander seriesExpander) {
         super(FunctionType.COS);
-        this.sinCalculator = sinCalculator;
+        this.seriesExpander = seriesExpander;
     }
 
     @Override
@@ -32,17 +31,9 @@ public class CosCalculator extends FunctionCalculator {
                     x, getFunction().getName()));
         }
 
-        BigDecimal preciseX = BigDecimal.valueOf(x);
-        double remainder = preciseX.remainder(BigDecimal.valueOf(Math.PI * 2)).doubleValue();
-        double radical = 1 - Math.pow(sinCalculator.calculate(x), 2);
-        double result;
-        if (remainder >= -Math.PI / 2 && remainder <= Math.PI / 2
-            || remainder >= Math.PI * 1.5 && remainder <= Math.PI * 2
-            || remainder >= -Math.PI * 2 && remainder <= -Math.PI * 1.5) {
-            result = Math.sqrt(radical);
-        } else {
-            result = -Math.sqrt(radical);
-        }
+        double result = seriesExpander.calculate(x);
+        result = result > 1.0 ? 1.0 : result;
+        result = result < -1.0 ? -1.0 : result;
         writeCalculationResult(x, result);
         return result;
     }
@@ -60,17 +51,9 @@ public class CosCalculator extends FunctionCalculator {
                     String.format("Cannot calculate a function with negative accuracy: epsilon = %f", epsilon));
         }
 
-        BigDecimal preciseX = BigDecimal.valueOf(x);
-        double remainder = preciseX.remainder(BigDecimal.valueOf(Math.PI * 2)).doubleValue();
-        double radical = Math.max(1 - Math.pow(sinCalculator.calculate(x, epsilon), 2), 0);
-        double result;
-        if (remainder >= -Math.PI / 2 && remainder <= Math.PI / 2
-            || remainder >= Math.PI * 1.5 && remainder <= Math.PI * 2
-            || remainder >= -Math.PI * 2 && remainder <= -Math.PI * 1.5) {
-            result = Math.sqrt(radical);
-        } else {
-            result = -Math.sqrt(radical);
-        }
+        double result = seriesExpander.calculate(x, epsilon);
+        result = result > 1.0 ? 1.0 : result;
+        result = result < -1.0 ? -1.0 : result;
         writeCalculationResult(x, result);
         return result;
     }
