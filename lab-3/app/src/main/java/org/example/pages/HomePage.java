@@ -16,10 +16,6 @@ public class HomePage extends Page {
         return safeGetText(By.xpath("//h1[contains(@class, 'hero-heading')]"));
     }
 
-    public void consent() {
-        safeClick(By.xpath("//button[@aria-label='Consent']"));
-    }
-
     public void openDemonList() {
         safeClick(By.xpath("//a[@href='/classic']"));
         new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.urlContains("/classic"));
