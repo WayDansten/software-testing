@@ -34,11 +34,11 @@ class PlayerListPageTest {
     void findPlayerByNameTest(String playerName) {
         drivers.forEach(driver -> {
             PlayerListPage page = PageFactory.initElements(driver, PlayerListPage.class);
-            page.open();
-            page.consent();
-            page.acceptCookies();
-            page.findPlayerByName(playerName);
-            page.openPlayerProfile(playerName);
+            page.open()
+                .consent()
+                .acceptCookies()
+                .findPlayerByName(playerName)
+                .openPlayerProfile(playerName);
             assertEquals(playerName, page.getSelectedPlayerName());
         });
     }

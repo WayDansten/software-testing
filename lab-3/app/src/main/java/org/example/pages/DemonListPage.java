@@ -34,30 +34,41 @@ public class DemonListPage extends Page {
         return safeGetText(By.xpath("//h1[contains(@class,'level-title')]"));
     }
 
-    public void findDemonByName(String demonName) {
+    public DemonListPage findDemonByName(String demonName) {
         safeClick(By.xpath("//input[contains(@class,'search-input')]"));
         WebElement searchInput = driver.findElement(By.xpath("//input[contains(@class,'search-input')]"));
         searchInput.sendKeys(demonName);
         searchInput.sendKeys(Keys.ENTER);
+
+        return this;
     }
 
-    public void enableFilter(String filterName) {
+    public DemonListPage enableFilter(String filterName) {
         safeClick(By.xpath("//button[contains(@class,'filter-trigger')]"));
         safeClick(By.xpath(String.format("//button[contains(@class,'filter-chip') and ./span[text()='%s']]", filterName)));
+        safeClick(By.xpath("//button[contains(@class,'filter-trigger')]"));
+
+        return this;
     }
 
-    public void toggleViewVariant() {
+    public DemonListPage toggleViewVariant() {
         WebElement detailedViewButton = driver.findElement(By.xpath("//button[@title='Detailed view' and contains(@class,'view-toggle-btn')]"));
         if (detailedViewButton.getAttribute("class").contains("active")) {
             safeClick(By.xpath("//button[@title='Compact view' and contains(@class,'view-toggle-btn')]"));
+            new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(@class,'level-card-compact')]")));
         } else {
             safeClick(By.xpath("//button[@title='Detailed view' and contains(@class,'view-toggle-btn')]"));
+            new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(@class,'level-card')]")));
         }
+
+        return this;
     }
 
-    public void openFutureList() {
+    public DemonListPage openFutureList() {
         safeClick(By.xpath("//button[contains(@class,'nav-trigger') and ./span[text()='Lists']]"));
         safeClick(By.xpath("//a[@href='/future']"));
         new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.urlContains("/future"));
+
+        return this;
     }
 }

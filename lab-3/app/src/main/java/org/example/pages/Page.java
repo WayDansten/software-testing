@@ -15,29 +15,33 @@ public abstract class Page {
     protected final WebDriver driver;
     private final String url;
 
-    public void open() {
+    public Page open() {
         if (driver.getCurrentUrl() == null || !driver.getCurrentUrl().equals(url)) {
             driver.get(url);
         }
+
+        return this;
     }
 
     protected void safeClick(By locator) {
-        new WebDriverWait(driver, Duration.ofSeconds(5))
+        new WebDriverWait(driver, Duration.ofSeconds(10))
             .until(ExpectedConditions.elementToBeClickable(locator))
             .click();
     }
 
     protected String safeGetText(By locator) {
-        return new WebDriverWait(driver, Duration.ofSeconds(5))
+        return new WebDriverWait(driver, Duration.ofSeconds(10))
             .until(ExpectedConditions.visibilityOfElementLocated(locator))
             .getText();
     }
 
-    public void consent() {
+    public Page consent() {
         safeClick(By.xpath("//button[@aria-label='Consent']"));
+        return this;
     }
 
-    public void acceptCookies() {
+    public Page acceptCookies() {
         safeClick(By.xpath("//button[contains(@class,'cookie-accept')]"));
+        return this;
     }
 }

@@ -32,9 +32,9 @@ class HomePageTest {
     void openDemonListTest() {
         drivers.forEach(driver -> {
             HomePage page = PageFactory.initElements(driver, HomePage.class);
-            page.open();
-            page.consent();
-            page.openDemonList();
+            page.open()
+                .consent()
+                .openDemonList();
             assertEquals("https://demonlist.org/classic", driver.getCurrentUrl());
         });
     }
@@ -43,9 +43,9 @@ class HomePageTest {
     void openPlayerListTest() {
         drivers.forEach(driver -> {
             HomePage page = PageFactory.initElements(driver, HomePage.class);
-            page.open();
-            page.consent();
-            page.openPlayerList();
+            page.open()
+                .consent()
+                .openPlayerList();
             assertEquals("https://demonlist.org/leaderboard/players", driver.getCurrentUrl());
         });
     }
@@ -54,9 +54,9 @@ class HomePageTest {
     void changeLanguageTest() {
         drivers.forEach(driver -> {
             HomePage page = PageFactory.initElements(driver, HomePage.class);
-            page.open();
-            page.consent();
-            page.changeLanguage("Русский");
+            page.open()
+                .consent()
+                .changeLanguage("Русский");
             assertEquals("Самый полный и авторитетный рейтинг сложнейших демонов Geometry Dash, поддерживаемый преданным сообществом.", page.getHeroHeading());
         });
     }

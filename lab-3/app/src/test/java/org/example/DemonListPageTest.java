@@ -49,11 +49,12 @@ class DemonListPageTest {
     void openDemonTest(String sublistName, int position) {
         drivers.forEach(driver -> {
             DemonListPage page = PageFactory.initElements(driver, DemonListPage.class);
-            page.open();
-            page.consent();
-            page.acceptCookies();
-            page.toggleViewVariant();
-            page.openDemon(position);
+            page.open()
+                .consent()
+                .acceptCookies()
+                .toggleViewVariant()
+                .enableFilter()
+                .openDemon(position);
             assertEquals("https://demonlist.org/classic/" + position, driver.getCurrentUrl());
         });
     }
@@ -63,10 +64,10 @@ class DemonListPageTest {
     void findDemonTest(String demonName) {
         drivers.forEach(driver -> {
             DemonListPage page = PageFactory.initElements(driver, DemonListPage.class);
-            page.open();
-            page.consent();
-            page.findDemonByName(demonName);
-            String actualDemonName = page.openDemon(demonName);
+            String actualDemonName = page.open()
+                                        .consent()
+                                        .findDemonByName(demonName)
+                                        .openDemon(demonName);
             assertEquals(demonName, actualDemonName);
         });
     }
@@ -75,10 +76,10 @@ class DemonListPageTest {
     void viewFutureListTest() {
         drivers.forEach(driver -> {
             DemonListPage page = PageFactory.initElements(driver, DemonListPage.class);
-            page.open();
-            page.consent();
-            page.openFutureList();
-            String actualDemonName = page.openDemon("Aeternus");
+            String actualDemonName = page.open()
+                                        .consent()
+                                        .openFutureList()
+                                        .openDemon("Aeternus");
             assertEquals("Aeternus", actualDemonName);
         });
     }

@@ -27,8 +27,10 @@ public class HomePage extends Page {
         new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.urlContains("/leaderboard/players"));
     }
 
-    public void changeLanguage(String language) {
+    public HomePage changeLanguage(String language) {
         safeClick(By.xpath("//nav[contains(@class,'desktop-nav')]/div[last()]/button"));
         safeClick(By.xpath(String.format("//button[contains(@class,'dropdown-item') and ./span[text()='%s']]", language)));
+
+        return this;
     }
 }

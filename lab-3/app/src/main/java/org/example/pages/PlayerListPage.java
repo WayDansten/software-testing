@@ -10,15 +10,19 @@ public class PlayerListPage extends Page {
         super(driver, "https://demonlist.org/leaderboard/players");
     }
 
-    public void openPlayerProfile(String playerName) {
+    public PlayerListPage openPlayerProfile(String playerName) {
         safeClick(By.xpath(String.format("//button[./span[text()='%s']]", playerName)));
+
+        return this;
     }
 
-    public void findPlayerByName(String playerName) {
+    public PlayerListPage findPlayerByName(String playerName) {
         safeClick(By.xpath("//input[contains(@class,'search-input')]"));
         WebElement searchInput = driver.findElement(By.xpath("//input[contains(@class,'search-input')]"));
         searchInput.sendKeys(playerName);
         searchInput.sendKeys(Keys.ENTER);
+
+        return this;
     }
 
     public String getSelectedPlayerName() {
