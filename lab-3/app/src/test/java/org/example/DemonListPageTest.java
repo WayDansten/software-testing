@@ -50,10 +50,9 @@ class DemonListPageTest {
         drivers.forEach(driver -> {
             DemonListPage page = PageFactory.initElements(driver, DemonListPage.class);
             page.open()
-                .consent()
-                .acceptCookies()
-                .toggleViewVariant()
-                .enableFilter()
+                .acceptCookies();
+            page.toggleViewVariant()
+                .enableFilter(sublistName)
                 .openDemon(position);
             assertEquals("https://demonlist.org/classic/" + position, driver.getCurrentUrl());
         });
@@ -64,9 +63,8 @@ class DemonListPageTest {
     void findDemonTest(String demonName) {
         drivers.forEach(driver -> {
             DemonListPage page = PageFactory.initElements(driver, DemonListPage.class);
-            String actualDemonName = page.open()
-                                        .consent()
-                                        .findDemonByName(demonName)
+            page.open();
+            String actualDemonName = page.findDemonByName(demonName)
                                         .openDemon(demonName);
             assertEquals(demonName, actualDemonName);
         });
@@ -76,9 +74,8 @@ class DemonListPageTest {
     void viewFutureListTest() {
         drivers.forEach(driver -> {
             DemonListPage page = PageFactory.initElements(driver, DemonListPage.class);
-            String actualDemonName = page.open()
-                                        .consent()
-                                        .openFutureList()
+            page.open();
+            String actualDemonName = page.openFutureList()
                                         .openDemon("Aeternus");
             assertEquals("Aeternus", actualDemonName);
         });

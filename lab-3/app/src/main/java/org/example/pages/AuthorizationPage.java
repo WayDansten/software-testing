@@ -1,9 +1,39 @@
 package org.example.pages;
 
-import org.example.pages.Page;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class AuthorizationPage extends Page {
-    public CountryListPage(WebDriver driver) {
+    public AuthorizationPage(WebDriver driver) {
         super(driver, "https://demonlist.org/signin");
+    }
+
+    public AuthorizationPage signIn(String email, String password) {
+        safeClick(By.xpath("//input[@id='login']"));
+        WebElement loginInput = driver.findElement(By.xpath("//input[@id='login']"));
+        loginInput.sendKeys(email);
+
+        safeClick(By.xpath("//input[@id='password']"));
+        WebElement passwordInput = driver.findElement(By.xpath("//input[@id='password']"));
+        loginInput.sendKeys(password);
+
+        safeClick(By.xpath("//button[contains(@class,'auth-submit')]"));
+
+        return this;
+    }
+
+    public AuthorizationPage signOut() {
+        safeClick(By.xpath("//button[@title='Sign out']"));
+
+        return this;
+    }
+
+    public boolean isAuthorized() {
+        return !driver.findElements(By.xpath("//a[@href='/signin']")).isEmpty();
+    }
+
+    public String getUsername() {
+        return safeGetText(By.xpath("//a[contains(@class,'user-btn')]/span"));
     }
 }

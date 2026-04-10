@@ -35,9 +35,8 @@ class PlayerListPageTest {
         drivers.forEach(driver -> {
             PlayerListPage page = PageFactory.initElements(driver, PlayerListPage.class);
             page.open()
-                .consent()
-                .acceptCookies()
-                .findPlayerByName(playerName)
+                .acceptCookies();
+            page.findPlayerByName(playerName)
                 .openPlayerProfile(playerName);
             assertEquals(playerName, page.getSelectedPlayerName());
         });

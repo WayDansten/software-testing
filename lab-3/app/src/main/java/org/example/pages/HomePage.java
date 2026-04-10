@@ -16,15 +16,20 @@ public class HomePage extends Page {
         return safeGetText(By.xpath("//h1[contains(@class, 'hero-heading')]"));
     }
 
-    public void openDemonList() {
+    public void openDemonListPage() {
         safeClick(By.xpath("//a[@href='/classic']"));
         new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.urlContains("/classic"));
     }
 
-    public void openPlayerList() {
+    public void openPlayerListPage() {
         safeClick(By.xpath("//button[./span[text()='More']]"));
         safeClick(By.xpath("//a[@href='/leaderboard/players']"));
         new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.urlContains("/leaderboard/players"));
+    }
+
+    public void openAuthorizationPage() {
+        safeClick(By.xpath("//a[@href='/signin']"));
+        new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions.urlContains("/signin"));
     }
 
     public HomePage changeLanguage(String language) {

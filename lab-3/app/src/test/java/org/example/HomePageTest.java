@@ -9,6 +9,8 @@ import org.example.pages.HomePage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -29,35 +31,47 @@ class HomePageTest {
     }
 
     @Test
-    void openDemonListTest() {
+    void openDemonListPageTest() {
         drivers.forEach(driver -> {
             HomePage page = PageFactory.initElements(driver, HomePage.class);
-            page.open()
-                .consent()
-                .openDemonList();
+            page.open();
+            page.openDemonListPage();
             assertEquals("https://demonlist.org/classic", driver.getCurrentUrl());
         });
     }
 
     @Test
-    void openPlayerListTest() {
+    void openPlayerListPageTest() {
         drivers.forEach(driver -> {
             HomePage page = PageFactory.initElements(driver, HomePage.class);
-            page.open()
-                .consent()
-                .openPlayerList();
+            page.open();
+            page.openPlayerListPage();
             assertEquals("https://demonlist.org/leaderboard/players", driver.getCurrentUrl());
         });
     }
 
     @Test
-    void changeLanguageTest() {
+    void openAuthorizationPageTest() {
         drivers.forEach(driver -> {
             HomePage page = PageFactory.initElements(driver, HomePage.class);
-            page.open()
-                .consent()
-                .changeLanguage("Русский");
-            assertEquals("Самый полный и авторитетный рейтинг сложнейших демонов Geometry Dash, поддерживаемый преданным сообществом.", page.getHeroHeading());
+            page.open();
+            page.openAuthorizationPage();
+            assertEquals("https://demonlist.org/signin", driver.getCurrentUrl());
+        });
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+        "English, The most complete and trusted ranking of the hardest Geometry Dash demons, maintained by a dedicated community.",
+        "Русский, Самый полный и авторитетный рейтинг сложнейших демонов Geometry Dash, поддерживаемый преданным сообществом.",
+        "Español, El ranking más completo y confiable de los demonios más difíciles de Geometry Dash, mantenido por una comunidad dedicada."
+    })
+    void changeLanguageTest(String language, String title) {
+        drivers.forEach(driver -> {
+            HomePage page = PageFactory.initElements(driver, HomePage.class);
+            page.open();
+            page.changeLanguage(language);
+            assertEquals(title, page.getHeroHeading());
         });
     }
 }

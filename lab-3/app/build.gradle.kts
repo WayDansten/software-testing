@@ -28,6 +28,8 @@ dependencies {
 	annotationProcessor("org.projectlombok:lombok:1.18.42")
 
     implementation("org.seleniumhq.selenium:selenium-java:4.41.0")
+    implementation("org.seleniumhq.selenium:selenium-chrome-driver:4.41.0")
+    implementation("org.seleniumhq.selenium:selenium-firefox-driver:4.41.0")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
