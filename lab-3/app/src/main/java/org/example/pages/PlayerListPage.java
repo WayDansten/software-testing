@@ -1,5 +1,8 @@
 package org.example.pages;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -10,10 +13,17 @@ public class PlayerListPage extends Page {
         super(driver, "https://demonlist.org/leaderboard/players");
     }
 
-    public PlayerListPage openPlayerProfile(String playerName) {
+    public PlayerProfilePage openPlayerProfile(String playerName) {
         safeClick(By.xpath(String.format("//button[./span[text()='%s']]", playerName)));
+        safeClick(By.xpath("//a[contains(@class,'player-username')]"));
 
-        return this;
+        WebElement playerLink = driver.findElement(By.xpath("//a[contains(@class,'player-username')]"));
+        int id = Integer.parseInt(playerLink.getAttribute("href").substring("https://demonlist.org/profile/".length()));
+        
+        List<String> tabs = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(tabs.get(tabs.size() - 1));
+
+        return new PlayerProfilePage(driver, id);
     }
 
     public PlayerListPage findPlayerByName(String playerName) {
@@ -23,9 +33,5 @@ public class PlayerListPage extends Page {
         searchInput.sendKeys(Keys.ENTER);
 
         return this;
-    }
-
-    public String getSelectedPlayerName() {
-        return safeGetText(By.xpath("//a[contains(@class,'player-username')]"));
     }
 }

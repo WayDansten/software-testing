@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.example.pages.PlayerListPage;
+import org.example.pages.PlayerProfilePage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -33,12 +34,14 @@ class PlayerListPageTest {
     @ValueSource(strings = {"Zoink", "Zeronium", "Technical"})
     void findPlayerByNameTest(String playerName) {
         drivers.forEach(driver -> {
-            PlayerListPage page = PageFactory.initElements(driver, PlayerListPage.class);
-            page.open()
+            PlayerListPage listPage = PageFactory.initElements(driver, PlayerListPage.class);
+            listPage.open()
+                .consent()
+                .closePopup()
                 .acceptCookies();
-            page.findPlayerByName(playerName)
-                .openPlayerProfile(playerName);
-            assertEquals(playerName, page.getSelectedPlayerName());
+            PlayerProfilePage profilePage = listPage.findPlayerByName(playerName)
+                                                .openPlayerProfile(playerName);
+            assertEquals(playerName, profilePage.getPlayerName());
         });
     }
 }

@@ -34,7 +34,10 @@ class HomePageTest {
     void openDemonListPageTest() {
         drivers.forEach(driver -> {
             HomePage page = PageFactory.initElements(driver, HomePage.class);
-            page.open();
+            page.open()
+                .consent()
+                .closePopup()
+                .acceptCookies();
             page.openDemonListPage();
             assertEquals("https://demonlist.org/classic", driver.getCurrentUrl());
         });
@@ -44,7 +47,10 @@ class HomePageTest {
     void openPlayerListPageTest() {
         drivers.forEach(driver -> {
             HomePage page = PageFactory.initElements(driver, HomePage.class);
-            page.open();
+            page.open()
+                .consent()
+                .closePopup()
+                .acceptCookies();
             page.openPlayerListPage();
             assertEquals("https://demonlist.org/leaderboard/players", driver.getCurrentUrl());
         });
@@ -54,7 +60,10 @@ class HomePageTest {
     void openAuthorizationPageTest() {
         drivers.forEach(driver -> {
             HomePage page = PageFactory.initElements(driver, HomePage.class);
-            page.open();
+            page.open()
+                .consent()
+                .closePopup()
+                .acceptCookies();
             page.openAuthorizationPage();
             assertEquals("https://demonlist.org/signin", driver.getCurrentUrl());
         });
@@ -62,14 +71,17 @@ class HomePageTest {
 
     @ParameterizedTest
     @CsvSource({
-        "English, The most complete and trusted ranking of the hardest Geometry Dash demons, maintained by a dedicated community.",
-        "Русский, Самый полный и авторитетный рейтинг сложнейших демонов Geometry Dash, поддерживаемый преданным сообществом.",
-        "Español, El ranking más completo y confiable de los demonios más difíciles de Geometry Dash, mantenido por una comunidad dedicada."
+        "English, 'The most complete and trusted ranking of the hardest Geometry Dash demons, maintained by a dedicated community.'",
+        "Русский, 'Самый полный и авторитетный рейтинг сложнейших демонов Geometry Dash, поддерживаемый преданным сообществом.'",
+        "Español, 'El ranking más completo y confiable de los demonios más difíciles de Geometry Dash, mantenido por una comunidad dedicada.'"
     })
     void changeLanguageTest(String language, String title) {
         drivers.forEach(driver -> {
             HomePage page = PageFactory.initElements(driver, HomePage.class);
-            page.open();
+            page.open()
+                .consent()
+                .closePopup()
+                .acceptCookies();
             page.changeLanguage(language);
             assertEquals(title, page.getHeroHeading());
         });

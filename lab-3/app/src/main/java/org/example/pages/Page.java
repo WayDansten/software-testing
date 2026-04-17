@@ -35,13 +35,30 @@ public abstract class Page {
             .getText();
     }
 
+    protected boolean isElementPresent(By locator) {
+        try {
+            return new WebDriverWait(driver, Duration.ofSeconds(10))
+            .until(ExpectedConditions.visibilityOfElementLocated(locator)).isDisplayed();
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
     public Page consent() {
         safeClick(By.xpath("//button[@aria-label='Consent']"));
+
         return this;
     }
 
     public Page acceptCookies() {
         safeClick(By.xpath("//button[contains(@class,'cookie-accept')]"));
+
+        return this;
+    }
+
+    public Page closePopup() {
+        safeClick(By.xpath("//button[contains(@class,'dismiss-btn')]"));
+
         return this;
     }
 }

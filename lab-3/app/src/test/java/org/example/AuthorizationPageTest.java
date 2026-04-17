@@ -35,7 +35,10 @@ class AuthorizationPageTest {
         String password = System.getenv("TEST_PASSWORD");
         drivers.forEach(driver -> {
             AuthorizationPage page = PageFactory.initElements(driver, AuthorizationPage.class);
-            page.open();
+            page.open()
+                .consent()
+                .closePopup()
+                .acceptCookies();
             page.signIn(username, password);
             assertTrue(page.isAuthorized());
         });
@@ -47,7 +50,10 @@ class AuthorizationPageTest {
         String password = System.getenv("TEST_PASSWORD");
         drivers.forEach(driver -> {
             AuthorizationPage page = PageFactory.initElements(driver, AuthorizationPage.class);
-            page.open();
+            page.open()
+                .consent()
+                .closePopup()
+                .acceptCookies();
             page.signIn(username, password).signOut();
             assertFalse(page.isAuthorized());
         });

@@ -50,6 +50,8 @@ class DemonListPageTest {
         drivers.forEach(driver -> {
             DemonListPage page = PageFactory.initElements(driver, DemonListPage.class);
             page.open()
+                .consent()
+                .closePopup()
                 .acceptCookies();
             page.toggleViewVariant()
                 .enableFilter(sublistName)
@@ -63,7 +65,10 @@ class DemonListPageTest {
     void findDemonTest(String demonName) {
         drivers.forEach(driver -> {
             DemonListPage page = PageFactory.initElements(driver, DemonListPage.class);
-            page.open();
+            page.open()
+                .consent()
+                .closePopup()
+                .acceptCookies();
             String actualDemonName = page.findDemonByName(demonName)
                                         .openDemon(demonName);
             assertEquals(demonName, actualDemonName);
@@ -74,7 +79,10 @@ class DemonListPageTest {
     void viewFutureListTest() {
         drivers.forEach(driver -> {
             DemonListPage page = PageFactory.initElements(driver, DemonListPage.class);
-            page.open();
+            page.open()
+                .consent()
+                .closePopup()
+                .acceptCookies();
             String actualDemonName = page.openFutureList()
                                         .openDemon("Aeternus");
             assertEquals("Aeternus", actualDemonName);
