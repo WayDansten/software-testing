@@ -2,52 +2,49 @@ package org.example;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Stream;
 
 import org.example.pages.DemonListPage;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.example.utils.ArgumentSetup;
+import org.example.utils.BrowserType;
+import org.example.utils.DriverFactory;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.PageFactory;
 
 class DemonListPageTest {
-    private final List<WebDriver> drivers = new ArrayList<>();
-
-    @BeforeEach
-    void setUp() {
-        drivers.add(new ChromeDriver());
-        // drivers.add(new FirefoxDriver());
+    static Stream<Arguments> openDemonCases() {
+        return ArgumentSetup.withBrowsersArgs(Stream.of(
+            Arguments.of("Main", 1),
+            Arguments.of("Main", 24),
+            Arguments.of("Main", 75),
+            Arguments.of("Extended", 76),
+            Arguments.of("Extended", 113),
+            Arguments.of("Extended", 150),
+            Arguments.of("Advanced", 151),
+            Arguments.of("Advanced", 200),
+            Arguments.of("Advanced", 300),
+            Arguments.of("Unbounded", 301),
+            Arguments.of("Unbounded", 757),
+            Arguments.of("Unbounded", 1650)
+        ));
     }
 
-    @AfterEach
-    void tearDown() {
-        drivers.forEach(WebDriver::quit);
+    static Stream<Arguments> findDemonCases() {
+        return ArgumentSetup.withBrowsers(Stream.of("limbo but uwu ig idk", "Shock Breaker", "Prismatic Haze"));
+    }
+
+    static Stream<Arguments> futureListCases() {
+        return ArgumentSetup.withBrowsers(Stream.of("Aeternus"));
     }
 
     @ParameterizedTest
-    @CsvSource({
-        "Main, 1",
-        "Main, 24",
-        "Main, 75",
-        "Extended, 76",
-        "Extended, 113",
-        "Extended, 150",
-        "Advanced, 151",
-        "Advanced, 200",
-        "Advanced, 300",
-        "Unbounded, 301",
-        "Unbounded, 757",
-        "Unbounded, 1650",
-    })
-    void openDemonTest(String sublistName, int position) {
-        drivers.forEach(driver -> {
+    @MethodSource("openDemonCases")
+    void openDemonTest(BrowserType browser, String sublistName, int position) {
+        WebDriver driver = DriverFactory.create(browser);
+        try {
             DemonListPage page = PageFactory.initElements(driver, DemonListPage.class);
             page.open()
                 .consent()
@@ -57,13 +54,16 @@ class DemonListPageTest {
                 .enableFilter(sublistName)
                 .openDemon(position);
             assertEquals("https://demonlist.org/classic/" + position, driver.getCurrentUrl());
-        });
+        } finally {
+            driver.quit();
+        }
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"limbo but uwu ig idk", "Shock Breaker", "Prismatic Haze"})
-    void findDemonTest(String demonName) {
-        drivers.forEach(driver -> {
+    @MethodSource("findDemonCases")
+    void findDemonTest(BrowserType browser, String demonName) {
+        WebDriver driver = DriverFactory.create(browser);
+        try {
             DemonListPage page = PageFactory.initElements(driver, DemonListPage.class);
             page.open()
                 .consent()
@@ -72,20 +72,26 @@ class DemonListPageTest {
             String actualDemonName = page.findDemonByName(demonName)
                                         .openDemon(demonName);
             assertEquals(demonName, actualDemonName);
-        });
+        } finally {
+            driver.quit();
+        }
     }
 
-    @Test
-    void viewFutureListTest() {
-        drivers.forEach(driver -> {
+    @ParameterizedTest
+    @MethodSource("futureListCases")
+    void viewFutureListTest(BrowserType browser, String demonName) {
+        WebDriver driver = DriverFactory.create(browser);
+        try {
             DemonListPage page = PageFactory.initElements(driver, DemonListPage.class);
             page.open()
                 .consent()
                 .closePopup()
                 .acceptCookies();
             String actualDemonName = page.openFutureList()
-                                        .openDemon("Aeternus");
-            assertEquals("Aeternus", actualDemonName);
-        });
+                                        .openDemon(demonName);
+            assertEquals(demonName, actualDemonName);
+        } finally {
+            driver.quit();
+        }
     }
 }

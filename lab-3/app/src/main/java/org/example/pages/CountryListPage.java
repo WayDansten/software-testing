@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -20,10 +19,7 @@ public class CountryListPage extends Page {
     }
 
     public CountryListPage findCountryByName(String countryName) {
-        safeClick(By.xpath("//input[contains(@class,'search-input')]"));
-        WebElement searchInput = driver.findElement(By.xpath("//input[contains(@class,'search-input')]"));
-        searchInput.sendKeys(countryName);
-        searchInput.sendKeys(Keys.ENTER);
+        safeSendKeys(By.xpath("//input[contains(@class,'search-input')]"), countryName);
 
         return this;
     }

@@ -3,8 +3,10 @@ package org.example.pages;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -33,6 +35,16 @@ public abstract class Page {
         return new WebDriverWait(driver, Duration.ofSeconds(10))
             .until(ExpectedConditions.visibilityOfElementLocated(locator))
             .getText();
+    }
+
+    protected void safeSendKeys(By locator, String keys) {
+        safeClick(locator);
+        WebElement searchInput = driver.findElement(locator);
+        searchInput.sendKeys(keys);
+        searchInput.sendKeys(Keys.ENTER);
+        
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+        .until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[contains(@class,'overlay')]")));
     }
 
     protected boolean isElementPresent(By locator) {

@@ -2,38 +2,29 @@ package org.example;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Stream;
 
 import org.example.pages.PlayerListPage;
 import org.example.pages.PlayerProfilePage;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.example.utils.ArgumentSetup;
+import org.example.utils.BrowserType;
+import org.example.utils.DriverFactory;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.PageFactory;
 
 class PlayerListPageTest {
-    private final List<WebDriver> drivers = new ArrayList<>();
-
-    @BeforeEach
-    void setUp() {
-        drivers.add(new ChromeDriver());
-        // drivers.add(new FirefoxDriver());
-    }
-
-    @AfterEach
-    void tearDown() {
-        drivers.forEach(WebDriver::quit);
+    static Stream<Arguments> playerCases() {
+        return ArgumentSetup.withBrowsers(Stream.of("Zoink", "Zeronium", "Technical"));
     }
     
     @ParameterizedTest
-    @ValueSource(strings = {"Zoink", "Zeronium", "Technical"})
-    void findPlayerByNameTest(String playerName) {
-        drivers.forEach(driver -> {
+    @MethodSource("playerCases")
+    void findPlayerByNameTest(BrowserType browser, String playerName) {
+        WebDriver driver = DriverFactory.create(browser);
+        try {
             PlayerListPage listPage = PageFactory.initElements(driver, PlayerListPage.class);
             listPage.open()
                 .consent()
@@ -42,6 +33,8 @@ class PlayerListPageTest {
             PlayerProfilePage profilePage = listPage.findPlayerByName(playerName)
                                                 .openPlayerProfile(playerName);
             assertEquals(playerName, profilePage.getPlayerName());
-        });
+        } finally {
+            driver.quit();
+        }
     }
 }

@@ -2,45 +2,33 @@ package org.example;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.stream.Stream;
 
 import org.example.pages.CountryListPage;
-import org.example.pages.PlayerListPage;
 import org.example.pages.PlayerProfilePage;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.example.utils.ArgumentSetup;
+import org.example.utils.BrowserType;
+import org.example.utils.DriverFactory;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.PageFactory;
 
 class CountryListPageTest {
-    private final List<WebDriver> drivers = new ArrayList<>();
-
-    @BeforeEach
-    void setUp() {
-        drivers.add(new ChromeDriver());
-        // drivers.add(new FirefoxDriver());
+    static Stream<Arguments> countryCases() {
+        return ArgumentSetup.withBrowsersArgs(Stream.of(
+            Arguments.of("United States", "Zoink"),
+            Arguments.of("Canada", "Zeronium"),
+            Arguments.of("Netherlands", "knobbelboy")
+        ));
     }
 
-    @AfterEach
-    void tearDown() {
-        drivers.forEach(WebDriver::quit);
-    }
-
-    
     @ParameterizedTest
-    @CsvSource({
-        "United States, Zoink",
-        "Canada, Zeronium",
-        "Netherlands, knobbelboy"
-    })
-    void findCountryByNameTest(String countryName, String playerName) {
-        drivers.forEach(driver -> {
+    @MethodSource("countryCases")
+    void findCountryByNameTest(BrowserType browser, String countryName, String playerName) {
+        WebDriver driver = DriverFactory.create(browser);
+        try {
             CountryListPage listPage = PageFactory.initElements(driver, CountryListPage.class);
             listPage.open()
                 .consent()
@@ -50,6 +38,8 @@ class CountryListPageTest {
                                                 .openCountryProfile(countryName)
                                                 .openPlayerProfile(playerName);
             assertEquals(playerName, profilePage.getPlayerName());
-        });
+        } finally {
+            driver.quit();
+        }
     }
 }

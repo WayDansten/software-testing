@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -35,10 +34,7 @@ public class DemonListPage extends Page {
     }
 
     public DemonListPage findDemonByName(String demonName) {
-        safeClick(By.xpath("//input[contains(@class,'search-input')]"));
-        WebElement searchInput = driver.findElement(By.xpath("//input[contains(@class,'search-input')]"));
-        searchInput.sendKeys(demonName);
-        searchInput.sendKeys(Keys.ENTER);
+        safeSendKeys(By.xpath("//input[contains(@class,'search-input')]"), demonName);
 
         return this;
     }
